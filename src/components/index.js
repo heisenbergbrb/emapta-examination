@@ -1,0 +1,7 @@
+export {default as Main} from './Main.vue'
+export {default as Navbar} from './Navbar.vue'
+export {default as Modal} from './Modal.vue'
+export {default as Card} from './Card.vue'
+export {default as AgileValues} from './AgileValues.vue'
+export {default as AgilePrinciples} from './AgilePrinciples.vue'
+export {default as AgileItem} from './AgileItem.vue'

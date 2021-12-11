@@ -1,28 +1,37 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div 
+    id="app" 
+    :class="isDark ? 'dark' : ''"
+    class="h-full w-full"
+  >
+    <Modal />
+    <div class="h-full bg-gray-100 dark:bg-gray-900 font-inter">
+      <Navbar
+        :isDark="isDark"
+        @toggle:darkmode="handleToogleDarkMode" 
+      />
+      <Main />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { Main, Navbar, Modal } from './components'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Main,
+    Navbar,
+    Modal
+  },
+  data: () => ({
+    isDark: false
+  }),
+  methods: {
+    handleToogleDarkMode () {
+      this.isDark = !this.isDark
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
