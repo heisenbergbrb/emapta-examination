@@ -4,12 +4,12 @@
       v-if="!item.isEditing"
       class="text-sm dark:text-gray-100"
     >
-      {{ item.text }}
+      {{ item.name }}
     </p>
     <input
       v-else
       :ref="`input-values-${item.id}`"
-      :value="item.text"
+      :value="item.name"
       @blur="handleClickEditItem(item.id, false)"
       type="text"
       class="text-sm dark:text-gray-100 dark:bg-gray-800 flex-1 focus:outline-none"
@@ -39,7 +39,7 @@
     </div>
     <button
       v-else
-      @click="handleConfirmEdit(item.id)"
+      @click.stop="handleConfirmEdit(item.id)"
       class="hover:bg-gray-200 rounded-full" 
       style="padding: 3px"
     >

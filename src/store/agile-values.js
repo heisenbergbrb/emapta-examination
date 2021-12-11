@@ -1,27 +1,9 @@
-import json from '../constants/four-agile-manifesto.json'
+import agileBase from './agile-base'
 
-const DEFAULT_STATE = {
-  items: [ ...json.data ]
-}
-
-const modal = {
+const COLLECTION_NAME = 'agile-values'
+const agileValues = {
   namespaced: true,
-  state: () => ({ ...DEFAULT_STATE }),
-  getters: { 
-    items (state) {
-      return state.items
-    }
-  },
-  mutations: {
-    SET_ITEMS (state, payload) {
-      state.items = payload
-    },
-  },
-  actions: {
-    setAgileValuesItems ({ commit }, payload) {
-      commit('SET_ITEMS', payload)
-    }
-  },
+  ...agileBase(COLLECTION_NAME)
 }
 
-export default modal
+export default agileValues

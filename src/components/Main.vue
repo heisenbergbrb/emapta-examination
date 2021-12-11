@@ -8,6 +8,7 @@
 <script>
 import AgileValues from './AgileValues.vue'
 import AgilePrinciples from './AgilePrinciples.vue'
+
 export default {
   name: 'Main',
   components: {

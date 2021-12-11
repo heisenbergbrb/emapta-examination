@@ -8,7 +8,9 @@
       placeholder="Enter an agile principle"
     />
     <div class="md:mt-2">
+      <Loading v-if="loading" />
       <AgileItem 
+        v-else
         v-for="item in items"
         :key="item.id"
         :item="item"
@@ -25,76 +27,48 @@ import { mapGetters, mapActions } from 'vuex'
 import Card from './Card.vue'
 import CardInput from './CardInput.vue'
 import AgileItem from './AgileItem.vue'
+import Loading from './Loading.vue'
+import agile from '../mixins/agile'
 import Messages from '../constants/messages.json'
 
 export default {
   name: "AgileValues",
+  mixins: [ agile ],
   components: {
     Card,
     CardInput,
-    AgileItem
+    AgileItem,
+    Loading
   },
+  data: () => ({
+    message: {
+      delete: Messages.DELETE_PRINCIPLE,
+      update: Messages.UPDATE_PRINCIPLE
+    }
+  }),
   computed: {
     ...mapGetters({
-      items: 'agilePrinciples/items'
+      items: 'agilePrinciples/items',
+      loading: 'agilePrinciples/loading'
     })
   },
+  async created () {
+    await this.bindItems()
+    this.setLoading(false)
+  },
   methods: {
-    ...mapActions('agilePrinciples', [ 'setAgilePrincipleItems' ]),
+    ...mapActions(
+      'agilePrinciples', 
+      [ 
+        'setLocalItems', 
+        'setLoading',
+        'bindItems', 
+        'addValue', 
+        'removeValue', 
+        'updateValue' 
+      ]
+    ),
     ...mapActions('modal', [ 'toggleModal' ]),
-    handleAddValues (inputValue) {
-      console.log(inputValue)
-    },
-    async handleClickEditValue ({ itemId, isEditing }) {
-      if (!isEditing) await this.timeout(200)
-      const updatedItems = [ ...this.items ].map(item => {
-        if (item.id === itemId) {
-          item.isEditing = isEditing
-        }
-
-        return item
-      })
-      this.setAgileValuesItems(updatedItems)
-    },
-    handleConfirmEdit ({ itemId, value }) {
-      if (!this.handleEditValidation(itemId, value)) return
-      this.toggleModal({
-        show: true,
-        title: Messages.UPDATE_PRINCIPLE.TITLE,
-        description: Messages.UPDATE_PRINCIPLE.DESCRIPTION,
-        buttonText: Messages.UPDATE_PRINCIPLE.BUTTON_TEXT,
-        buttonAction: () => {
-          this.handleDeleteValueFromApi(itemId)
-        }
-      })
-    },
-    handleEditValidation (itemId, value) {
-      if (value !== '') return true
-      const updatedItems = [ ...this.items ].map(item => {
-        if (item.id === itemId) {
-          item.isEditing = false
-        }
-
-        return item
-      })
-      this.setAgileValuesItems(updatedItems)
-
-      return false
-    },
-    handleConfirmRemoveValue (id) {
-      this.toggleModal({
-        show: true,
-        title: Messages.DELETE_PRINCIPLE.TITLE,
-        description: Messages.DELETE_PRINCIPLE.DESCRIPTION,
-        buttonText: Messages.DELETE_PRINCIPLE.BUTTON_TEXT,
-        buttonAction: () => {
-          this.handleDeleteValueFromApi(id)
-        }
-      })
-    },
-    handleDeleteValueFromApi (id) {
-      console.log(id)
-    },
   }
 }
 </script>
