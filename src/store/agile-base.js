@@ -3,6 +3,7 @@ import { firestoreAction } from 'vuexfire'
 import { db } from '../firebase'
 
 const agileBase = (COLLECTION_NAME) => ({
+  namespaced: true,
   state: {
     items: [],
     loading: true,

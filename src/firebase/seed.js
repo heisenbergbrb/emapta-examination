@@ -1,6 +1,6 @@
 import { serverTimestamp } from "firebase/firestore";
-import agileValues from '../constants/four-agile-manifesto.json'
-import agilePrinciple from '../constants/twelve-agile-principles.json'
+import agileValues from '../constants/four-agile-manifesto.js'
+import agilePrinciple from '../constants/twelve-agile-principles.js'
 
 export function seedDatabase(firebase) {
   for (const item of agileValues.data) {
