@@ -56,11 +56,6 @@ export default {
         ? this.isShakeAnimationShown = true
         : this.$emit('submit', this.value.trim())
       this.value = ''
-    },
-    timeout (ms) {
-      return new Promise((resolve) => {
-        window.setTimeout(resolve, ms)
-      })
     }
   }
 }
